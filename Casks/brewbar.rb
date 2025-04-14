@@ -1,13 +1,11 @@
 cask "brewbar" do
-  version "0.0.5"
-  sha256 "96d62dccc6f014542c999d2f7129b8f13d16bf8a9ca8d62c0d9ceddf1dd5424e"
+  version "0.0.6"
+  sha256 "5115faa92469ab2e864e27d4a464e5a586208c55d7784d1941dc76fb7b3a32d2"
 
   url "https://github.com/joshbeard/BrewBar/releases/download/v#{version}/BrewBar.zip"
   name "BrewBar"
   desc "A menubar app for managing Homebrew packages"
   homepage "https://github.com/joshbeard/BrewBar"
-
-  auto_updates true
 
   app "BrewBar.app"
 
