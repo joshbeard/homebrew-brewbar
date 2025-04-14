@@ -1,6 +1,6 @@
 cask "brewbar" do
   version "0.0.1"
-  sha256 "1881307a703b0998ce5372d0c35ad1717430ff1bdae6850738e2abaea852a559"
+  sha256 "4ff43c46cc77f6d0e3e15184f96c74d6bf6ece477e92155706dbb0ac1b9785da"
 
   url "https://github.com/joshbeard/BrewBar/releases/download/v#{version}/BrewBar.zip"
   name "BrewBar"
@@ -9,11 +9,12 @@ cask "brewbar" do
 
   app "BrewBar.app"
 
+  # Remove quarantine attribute
   postflight do
-    set_ownership ["/Applications/BrewBar.app"]
-    system_command "/usr/bin/xattr",
-                  args: ["-cr", "/Applications/BrewBar.app"],
-                  sudo: false
+    system "xattr", "-d", "com.apple.quarantine", "#{appdir}/BrewBar.app"
+  rescue
+    # In case xattr command fails (which can happen if the attribute doesn't exist)
+    nil
   end
 
   zap trash: [
