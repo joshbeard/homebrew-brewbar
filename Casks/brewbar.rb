@@ -1,6 +1,6 @@
 cask "brewbar" do
-  version "0.0.12"
-  sha256 "efafdc6b499d6f23a0c6486e5ce095da07511cc82fad51696cbae5738ae47a00"
+  version "0.0.13"
+  sha256 "a29b01fa57bc0814683480cecdc77598feda3248344ad8fc9ddf66f3d722830a"
 
   url "https://github.com/joshbeard/BrewBar/releases/download/v#{version}/BrewBar.zip"
   name "BrewBar"
@@ -31,7 +31,7 @@ cask "brewbar" do
 
   uninstall quit:      "me.joshbeard.BrewBar",
             launchctl: "me.joshbeard.BrewBar",
-            delete:    "#{appdir}/BrewBar.app"
+            trash:    "#{appdir}/BrewBar.app"
 
   zap trash: [
     "~/Library/Application Support/BrewBar",
