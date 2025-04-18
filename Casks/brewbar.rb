@@ -1,6 +1,6 @@
 cask "brewbar" do
-  version "0.0.14"
-  sha256 "f01abf9043ae338bf112f562162d3503efd5396f88a9e737a4164a64a4ad2271"
+  version "0.0.15"
+  sha256 "36555f39b6b73de325486b7fc8be6f77b093e860653dce6c6a94b37952a5c4a6"
 
   url "https://github.com/joshbeard/BrewBar/releases/download/v#{version}/BrewBar.zip"
   name "BrewBar"
@@ -9,29 +9,30 @@ cask "brewbar" do
 
   app "BrewBar.app"
 
-  # Remove quarantine attribute
-  postflight do
-    system "xattr", "-d", "com.apple.quarantine", "#{appdir}/BrewBar.app"
-  rescue
-    # In case xattr command fails (which can happen if the attribute doesn't exist)
-    nil
+  # Ensure permissions before uninstall
+  uninstall_preflight do
+    if File.exist?("#{appdir}/BrewBar.app")
+      system_command "chown", args: ["-R", "#{ENV['USER']}:admin", "#{appdir}/BrewBar.app"]
+      system_command "chmod", args: ["-R", "u+rw", "#{appdir}/BrewBar.app"]
+    end
   end
 
-  # Restart app after update
-  postflight do
-    set_ownership "#{appdir}/BrewBar.app"
+  # Ensure permissions before install
+  preflight do
+    system_command "chown", args: ["#{ENV['USER']}:admin", "#{appdir}"]
+    system_command "chmod", args: ["u+rw", "#{appdir}"]
+  end
 
-    # Restart the app if it was running
-    if system "pgrep", "-x", "BrewBar"
-      system_command "pkill", args: ["-x", "BrewBar"]
-      sleep 1
-      system_command "open", args: ["#{appdir}/BrewBar.app"]
-    end
+  # Remove quarantine attribute
+  postflight do
+    system_command "xattr", args: ["-d", "com.apple.quarantine", "#{appdir}/BrewBar.app"]
+  rescue
+    nil
   end
 
   uninstall quit:      "me.joshbeard.BrewBar",
             launchctl: "me.joshbeard.BrewBar",
-            trash:    "#{appdir}/BrewBar.app"
+            delete:    "#{appdir}/BrewBar.app"
 
   zap trash: [
     "~/Library/Application Support/BrewBar",
