@@ -1,6 +1,6 @@
 cask "brewbar" do
-  version "0.0.16"
-  sha256 "c11172afcb56be190f988dc429eec93bdd0b3dd07577d3974382b68bf31558a5"
+  version "0.0.17"
+  sha256 "dd27064832de428387bd16953453a5cad1660b3df750a3ca7ec82517e1dccc94"
 
   url "https://github.com/joshbeard/BrewBar/releases/download/v#{version}/BrewBar.zip"
   name "BrewBar"
@@ -8,20 +8,6 @@ cask "brewbar" do
   homepage "https://github.com/joshbeard/BrewBar"
 
   app "BrewBar.app"
-
-  # Ensure permissions before uninstall
-  uninstall_preflight do
-    if File.exist?("#{appdir}/BrewBar.app")
-      system_command "chown", args: ["-R", "#{ENV['USER']}:admin", "#{appdir}/BrewBar.app"]
-      system_command "chmod", args: ["-R", "u+rw", "#{appdir}/BrewBar.app"]
-    end
-  end
-
-  # Ensure permissions before install
-  preflight do
-    system_command "chown", args: ["#{ENV['USER']}:admin", "#{appdir}"]
-    system_command "chmod", args: ["u+rw", "#{appdir}"]
-  end
 
   # Remove quarantine attribute
   postflight do
@@ -31,7 +17,7 @@ cask "brewbar" do
   end
 
   uninstall quit:      "me.joshbeard.BrewBar",
-            launchctl: "me.joshbeard.BrewBar",
+            launchctl: "me.joshbeard.BrewBar"
 
   zap trash: [
     "~/Library/Application Support/BrewBar",
