@@ -1,6 +1,6 @@
 cask "brewbar" do
-  version "0.0.10"
-  sha256 "796c120f8a377f86d4dee88c147b5473fed07c42ec6e1c6cb476c67942af8dc0"
+  version "0.0.11"
+  sha256 "c4eedb286c93b33fa3d208bb63c2e8cda602b93c02007bc3e8a97312888fe09c"
 
   url "https://github.com/joshbeard/BrewBar/releases/download/v#{version}/BrewBar.zip"
   name "BrewBar"
